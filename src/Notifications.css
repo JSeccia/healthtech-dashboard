@@ -1,0 +1,14 @@
+/* Notifications.css */
+
+.notification {
+    margin-bottom: 20px;
+}
+
+.notification p {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.notification button {
+    margin-right: 5px;
+}
