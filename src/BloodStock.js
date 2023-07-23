@@ -1,7 +1,5 @@
-// BloodStock.js
-
-import { useEffect, useState } from "react";
-import './BloodStock.css';  // Import the CSS
+import { useEffect } from "react";
+import { Card, Badge, Row, Col } from 'antd';
 
 // Mock data
 const mockData = {
@@ -15,34 +13,43 @@ const BloodStock = ({ data, setData, lowStockThreshold }) => {
 		// Fetch data from API
 		// For now, we'll use mock data
 		setData(mockData);
-	}, []);
+	}, [setData]);
 
 	return (
-		<div className="container">
+		<Row gutter={16}>
 			{Object.entries(data).map(([hospital, bloodTypes]) => (
-				<div key={hospital} className="hospital">
-					<h3>{hospital}</h3>
-					<table>
-						<thead>
-						<tr>
-							<th>Blood Type</th>
-							<th>Units</th>
-							<th>Stock OK</th>
-						</tr>
-						</thead>
-						<tbody>
-						{Object.entries(bloodTypes).map(([type, count]) => (
-							<tr key={type}>
-								<td>{type}</td>
-								<td>{count}</td>
-								<td>{count > lowStockThreshold ? '✔️' : '❌'}</td>
-							</tr>
-						))}
-						</tbody>
-					</table>
-				</div>
+				<Col span={12} key={hospital}>
+					<Card title={hospital} style={{ margin: '20px 0', backgroundColor: '#fafafa' }}>
+						<Row gutter={16}>
+							{Object.entries(bloodTypes).slice(0, 4).map(([type, count], index) => (
+								<Col span={6} key={type}>
+									<p style={{ color: '#1890ff' }}>
+										{type}:
+										<Badge
+											count={count}
+											style={{ backgroundColor: count > lowStockThreshold ? '#52c41a' : '#f5222d', marginLeft: '10px' }}
+										/>
+									</p>
+								</Col>
+							))}
+						</Row>
+						<Row gutter={16}>
+							{Object.entries(bloodTypes).slice(4).map(([type, count], index) => (
+								<Col span={6} key={type}>
+									<p style={{ color: '#1890ff' }}>
+										{type}:
+										<Badge
+											count={count}
+											style={{ backgroundColor: count > lowStockThreshold ? '#52c41a' : '#f5222d', marginLeft: '10px' }}
+										/>
+									</p>
+								</Col>
+							))}
+						</Row>
+					</Card>
+				</Col>
 			))}
-		</div>
+		</Row>
 	);
 };
 

@@ -1,7 +1,5 @@
-// Notifications.js
-
-import React, { useState } from 'react';
-import './Notifications.css';  // Import the CSS
+import React from 'react';
+import { Alert, Timeline, Button } from 'antd';
 
 const Notifications = ({ notifications, setNotifications, history, setHistory }) => {
 
@@ -13,19 +11,29 @@ const Notifications = ({ notifications, setNotifications, history, setHistory })
 	};
 
 	return (
-		<div>
+		<div style={{ margin: '20px' }}>
 			<h2>Notifications</h2>
 			{notifications.map((notification, index) => (
-				<div key={index} className="notification">
-					<p>{notification}</p>
-					<button onClick={() => handleAction(notification, 'Accepted')}>Accept</button>
-					<button onClick={() => handleAction(notification, 'Refused')}>Refuse</button>
-				</div>
+				<Alert
+					key={index}
+					message={notification}
+					type="info"
+					action={
+						<Button size="small" onClick={() => handleAction(notification, 'Acknowledged')}>
+							Acknowledge
+						</Button>
+					}
+					style={{ marginBottom: '10px' }}
+				/>
 			))}
 			<h2>History</h2>
-			{history.map((item, index) => (
-				<p key={index}>{item.notification} - {item.action}</p>
-			))}
+			<Timeline>
+				{history.map((item, index) => (
+					<Timeline.Item key={index}>
+						{item.notification} - {item.action}
+					</Timeline.Item>
+				))}
+			</Timeline>
 		</div>
 	);
 };
